@@ -1,6 +1,7 @@
 package ru.hogwarts.school;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import ru.hogwarts.school.controller.FacultyController;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.FacultyRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +26,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
+
 public class FacultyControllerTestRest {
+
     @LocalServerPort
     private int port;
 
     @Autowired
     private FacultyController facultyController;
+
+    @Autowired
+    private FacultyRepository facultyRepository;
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -89,13 +96,19 @@ public class FacultyControllerTestRest {
         Assertions.assertThat(f).isNull();
     }
 
+@BeforeEach
+void setup(){
+        facultyRepository.deleteAll();
+}
     @Test
     public void testGetFacultyByColor() {
-
         String color = "Green";
         List <Faculty> expectedFaculties = new ArrayList<>();
 
-        expectedFaculties.add(new Faculty(1, "Fenix", color));
+        Faculty faculty = new Faculty(null, "name", color,null);
+        expectedFaculties.add(faculty);
+        facultyRepository.save(faculty);
+
         ResponseEntity<List<Faculty>> response = restTemplate.exchange(
                 "http://localhost:" + port + "/faculty/color/{color}",
                 HttpMethod.GET,
