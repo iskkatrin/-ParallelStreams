@@ -136,11 +136,11 @@ public class FacultyControllerTestWeb {
         faculty.setName("Big");
 
         Student student1 = new Student();
-        student1.setStudentId(1L);
+        student1.setId(1L);
         student1.setName("Nasty");
 
         Student student2 = new Student();
-        student2.setStudentId(2L);
+        student2.setId(2L);
         student2.setName("Lena");
 
         List<Student> students = Arrays.asList(student1, student2);

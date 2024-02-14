@@ -10,8 +10,6 @@ import ru.hogwarts.school.service.FacultyService;
 
 import java.util.List;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
 @RestController
 @RequestMapping("/faculty")
 public class FacultyController {
@@ -48,7 +46,7 @@ public class FacultyController {
     }
 
     @GetMapping("/{id}/students")
-    public List<Student> getStudentByFaculty(@PathVariable Long facultyId) {
-        return facultyService.getStudentByFaculty(facultyId);
+    public List<Student> getStudentByFaculty(@PathVariable Long Id) {
+        return facultyService.getStudentByFaculty(Id);
     }
 }

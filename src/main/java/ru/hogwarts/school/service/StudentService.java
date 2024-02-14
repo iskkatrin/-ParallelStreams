@@ -75,10 +75,10 @@ public class StudentService {
         return avatarRepository.findByStudent_studentId(studentId).orElseThrow();
     }
 
-    public void uploadAvatar(Long studentId, MultipartFile file) throws IOException {
-        Student student = findStudent(studentId);
+    public void uploadAvatar(Long Id, MultipartFile file) throws IOException {
+        Student student = findStudent(Id);
 
-        Path filePath = Path.of(avatarsDir, studentId + "." + getExtension(file.getOriginalFilename()));
+        Path filePath = Path.of(avatarsDir, Id + "." + getExtension(file.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
 
@@ -90,7 +90,7 @@ public class StudentService {
             bis.transferTo(bos);
         }
 
-        Avatar avatar = avatarRepository.findByStudent_studentId(studentId).orElseGet(Avatar::new);
+        Avatar avatar = avatarRepository.findByStudent_studentId(Id).orElseGet(Avatar::new);
         avatar.setStudent(student);
         avatar.setFilePath(filePath.toString());
         avatar.setFileSize(file.getSize());

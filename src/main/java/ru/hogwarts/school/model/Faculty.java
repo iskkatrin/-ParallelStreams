@@ -19,7 +19,7 @@ public class Faculty {
 
     @Id
     @GeneratedValue
-    private Long facultyId;
+    private Long Id;
     private String name;
     private String color;
 

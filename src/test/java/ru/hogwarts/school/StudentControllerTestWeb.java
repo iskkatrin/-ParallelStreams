@@ -45,7 +45,7 @@ public class StudentControllerTestWeb {
     @Test
     public void testGetStudent() throws Exception {
         Student student = new Student();
-        student.setStudentId(1L);
+        student.setId(1L);
         student.setName("John");
         student.setAge(20);
 
