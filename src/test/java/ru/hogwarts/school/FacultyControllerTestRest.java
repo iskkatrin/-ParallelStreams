@@ -44,14 +44,14 @@ public class FacultyControllerTestRest {
     @Test
     public void testGetFaculty() throws Exception {
         Faculty faculty = new Faculty();
-        faculty.setFacultyId(1L);
+        faculty.setId(1L);
         faculty.setName("Nikki");
         faculty.setColor("Green");
 
         Faculty actual = this.restTemplate.getForObject(
-                "http://localhost:" + port +"/faculty/{facultyId}", Faculty.class, faculty.getFacultyId());
+                "http://localhost:" + port +"/faculty/{facultyId}", Faculty.class, faculty.getId());
 
-        Assertions.assertThat(actual.getFacultyId()).isEqualTo(faculty.getFacultyId());
+        Assertions.assertThat(actual.getId()).isEqualTo(faculty.getId());
         Assertions.assertThat(actual.getName()).isEqualTo(faculty.getName());
         Assertions.assertThat(actual.getColor()).isEqualTo(faculty.getColor());
 }
@@ -63,7 +63,7 @@ public class FacultyControllerTestRest {
         faculty.setColor("Pink");
         Faculty actual = this.restTemplate.postForObject("http://localhost:" + port + "/faculty", faculty, Faculty.class);
 
-        Assertions.assertThat(actual.getFacultyId()).isNotNull();
+        Assertions.assertThat(actual.getId()).isNotNull();
         Assertions.assertThat(actual.getName()).isEqualTo("Zoo");
         Assertions.assertThat(actual.getColor()).isEqualTo("Pink");
     }
@@ -77,8 +77,8 @@ public class FacultyControllerTestRest {
         actual.setName("Cat");
         actual.setColor("Red");
       ResponseEntity <Faculty> updated = this.restTemplate.exchange
-              ("http://localhost:" + port + "/faculty/" + actual.getFacultyId(), HttpMethod.PUT, new HttpEntity<>(actual), Faculty.class);
-        Assertions.assertThat(updated.getBody().getFacultyId()).isNotNull();
+              ("http://localhost:" + port + "/faculty/" + actual.getId(), HttpMethod.PUT, new HttpEntity<>(actual), Faculty.class);
+        Assertions.assertThat(updated.getBody().getId()).isNotNull();
         Assertions.assertThat(updated.getBody().getName()).isEqualTo("Cat");
         Assertions.assertThat(updated.getBody().getColor()).isEqualTo("Red");
         }
@@ -90,9 +90,9 @@ public class FacultyControllerTestRest {
         faculty.setColor("Pink");
         Faculty actual = this.restTemplate.postForObject("http://localhost:" + port + "/faculty", faculty, Faculty.class);
         ResponseEntity <String> response = restTemplate.exchange
-                ("http://localhost:" + port + "/faculty/" + actual.getFacultyId(), HttpMethod.DELETE, null, String.class);
+                ("http://localhost:" + port + "/faculty/" + actual.getId(), HttpMethod.DELETE, null, String.class);
         Faculty f = restTemplate.getForObject("http://localhost:" + port + "/faculty/" +
-                actual.getFacultyId(), Faculty.class);
+                actual.getId(), Faculty.class);
         Assertions.assertThat(f).isNull();
     }
 

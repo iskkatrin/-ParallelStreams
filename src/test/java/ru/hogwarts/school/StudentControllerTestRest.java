@@ -91,6 +91,7 @@ public class StudentControllerTestRest {
 
     }
 
+    @Test
     public void TestGetFacultyByStudentId() throws Exception {
 
     }

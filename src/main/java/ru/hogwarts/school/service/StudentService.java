@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +25,8 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
 public class StudentService {
 
+    Logger logger = LoggerFactory.getLogger(StudentService.class);
+
     @Value("${path.to.avatar.folder}")
     private String avatarsDir;
 
@@ -34,11 +38,14 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
+
     public Student getStudentById(long studentId) {
+        logger.info("Метод getStudentById был вызван");
         return studentRepository.findById(studentId).get();
     }
 
     public Student createStudent(String name, int age) {
+        logger.info("Метод createStudent был вызван");
         Student student = new Student();
         student.setName(name);
         student.setAge(age);
@@ -46,6 +53,7 @@ public class StudentService {
     }
 
     public Student updateStudent(Long studentId, String name, int age) {
+        logger.info("Метод updateStudent был вызван");
         Student student = new Student();
         student.setName(name);
         student.setAge(age);
@@ -54,28 +62,35 @@ public class StudentService {
     }
 
     public void deleteStudent(Long studentId) {
+        logger.info("Метод deleteStudent был вызван");
         studentRepository.deleteById(studentId);
     }
 
     public List<Student> getStudentsByAge(int age) {
+        logger.info("Метод getStudentsByAge был вызван");
         return studentRepository.getByAge(age);
     }
 
     public Faculty getFacultyByStudentId(Long studentId) {
+        logger.info("Метод getFacultyByStudentId был вызван");
         Student student = studentRepository.findById(studentId).orElseThrow(
                 () -> new StudentNotFoundException("Student not found with id: " + studentId));
         return student.getFaculty();
     }
 
     public Student findStudent(Long id) {
+        logger.info("Метод findStudent был вызван");
         return studentRepository.findById(id).orElseThrow();
     }
 
     public Avatar findAvatar(Long studentId) {
+        logger.info("Метод findAvatar был вызван");
         return avatarRepository.findByStudent_studentId(studentId).orElseThrow();
     }
 
     public void uploadAvatar(Long Id, MultipartFile file) throws IOException {
+        logger.info("Метод uploadAvatar был вызван");
+
         Student student = findStudent(Id);
 
         Path filePath = Path.of(avatarsDir, Id + "." + getExtension(file.getOriginalFilename()));
@@ -101,10 +116,12 @@ public class StudentService {
     }
 
     private String getExtension(String fileName) {
+        logger.info("Метод getExtension был вызван");
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
     public Page<Avatar> getAllAvatars(Pageable pageable) {
+        logger.info("Метод getAllAvatars был вызван");
         return avatarRepository.findAll(pageable);
     }
 }

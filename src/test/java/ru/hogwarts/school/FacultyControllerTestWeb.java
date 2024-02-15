@@ -48,7 +48,7 @@ public class FacultyControllerTestWeb {
     @Test
     public void testGetFaculty() throws Exception {
         Faculty faculty = new Faculty();
-        faculty.setFacultyId(1L);
+        faculty.setId(1L);
         faculty.setName("Small");
         faculty.setColor("Blue");
         when(facultyService.getFacultyById(1)).thenReturn(faculty);
@@ -66,7 +66,7 @@ public class FacultyControllerTestWeb {
     @Test
     public void testCreateFaculty() throws Exception {
         Faculty faculty = new Faculty();
-        faculty.setFacultyId(1L);
+        faculty.setId(1L);
         faculty.setName("Faculty");
         faculty.setColor("Red");
 
@@ -85,7 +85,7 @@ public class FacultyControllerTestWeb {
     @Test
     public void testUpdateFaculty() throws Exception {
         Faculty faculty = new Faculty();
-        faculty.setFacultyId(1L);
+        faculty.setId(1L);
         faculty.setName("Faculty");
         faculty.setColor("Red");
 
@@ -112,12 +112,12 @@ public class FacultyControllerTestWeb {
     @Test
     public void testGetFacultyByColor() throws Exception {
         Faculty faculty1 = new Faculty();
-        faculty1.setFacultyId(1L);
+        faculty1.setId(1L);
         faculty1.setName("Faculty1");
         faculty1.setColor("Red");
 
         Faculty faculty2 = new Faculty();
-        faculty2.setFacultyId(2L);
+        faculty2.setId(2L);
         faculty2.setName("Faculty2");
         faculty2.setColor("Red");
 
@@ -132,7 +132,7 @@ public class FacultyControllerTestWeb {
     @Test
     public void testGetStudentByFaculty() throws Exception {
         Faculty faculty = new Faculty();
-        faculty.setFacultyId(1L);
+        faculty.setId(1L);
         faculty.setName("Big");
 
         Student student1 = new Student();
