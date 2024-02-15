@@ -4,4 +4,4 @@ databaseChangeLog:
 
 databaseChange:
   - include:
-      file: liquibase/scripts/index-practice.sql
+      file: liquibase/index-practice.sql
