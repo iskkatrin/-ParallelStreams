@@ -1,7 +1,5 @@
 databaseChangeLog:
   - include:
       file: liquibase/scripts/user.sql
-
-databaseChange:
   - include:
       file: liquibase/index-practice.sql
