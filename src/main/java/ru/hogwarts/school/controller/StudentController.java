@@ -5,9 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -16,8 +18,11 @@ public class StudentController {
 
     private final StudentService studentService;
 
-    public StudentController(StudentService studentService) {
+    private final StudentRepository studentRepository;
+
+    public StudentController(StudentService studentService, StudentRepository studentRepository) {
         this.studentService = studentService;
+        this.studentRepository = studentRepository;
     }
 
     @GetMapping
@@ -53,6 +58,32 @@ public class StudentController {
     @GetMapping("/{id}")
     public Faculty getFacultyByStudentId(@PathVariable Long studentId) {
         return studentService.getFacultyByStudentId(studentId);
+    }
 
+
+    @GetMapping("/namesStartingWithA")
+    public ResponseEntity<List<String>> getStudentNamesStartingWithA() {
+        List<Student> students = studentRepository.findAll();
+
+        List<String> namesStartingWithA = students.stream()
+                .filter(student -> student.getName().toUpperCase().startsWith("A"))
+                .map(Student::getName)
+                .map(String::toUpperCase)
+                .sorted()
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(namesStartingWithA);
+    }
+
+    @GetMapping("/averageAge")
+    public ResponseEntity<Double> getAverageStudentAge() {
+        List<Student> students = studentRepository.findAll();
+
+        double averageAge = students.stream()
+                .mapToDouble(Student::getAge)
+                .average()
+                .orElse(0);
+
+        return ResponseEntity.ok(averageAge);
     }
 }
