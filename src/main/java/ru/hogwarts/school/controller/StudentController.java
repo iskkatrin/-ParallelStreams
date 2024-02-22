@@ -8,6 +8,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.StudentService;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -85,5 +86,14 @@ public class StudentController {
                 .orElse(0);
 
         return ResponseEntity.ok(averageAge);
+    }
+
+    @GetMapping("/print-parallel")
+    public void printStudentNamesParallel() {
+        studentService.printStudentNamesParallel();
+    }
+    @GetMapping("/print-synchronized")
+    public void printStudentsSynchronized() {
+        studentService.printStudentsSynchronized();
     }
 }
