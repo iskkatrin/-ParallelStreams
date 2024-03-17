@@ -8,7 +8,6 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.StudentService;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,7 +30,6 @@ public class StudentController {
         Student student = studentService.getStudentById(Id);
         return new ResponseEntity<>(new Student(), HttpStatus.OK);
     }
-
 
     @PostMapping
     public ResponseEntity<Student> createStudent(@RequestParam String name, @RequestParam int age) {
@@ -60,7 +58,6 @@ public class StudentController {
     public Faculty getFacultyByStudentId(@PathVariable Long studentId) {
         return studentService.getFacultyByStudentId(studentId);
     }
-
 
     @GetMapping("/namesStartingWithA")
     public ResponseEntity<List<String>> getStudentNamesStartingWithA() {
@@ -95,5 +92,10 @@ public class StudentController {
     @GetMapping("/print-synchronized")
     public void printStudentsSynchronized() {
         studentService.printStudentsSynchronized();
+    }
+
+    @GetMapping
+    public void printStudentNamesParalell() {
+        studentService.findStudent(getFacultyByStudentId(getFacultyByStudentId(getFacultyByStudentId(Long id))));
     }
 }
