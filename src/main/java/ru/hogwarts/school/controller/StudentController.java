@@ -31,7 +31,6 @@ public class StudentController {
         return new ResponseEntity<>(new Student(), HttpStatus.OK);
     }
 
-
     @PostMapping
     public ResponseEntity<Student> createStudent(@RequestParam String name, @RequestParam int age) {
         Student student = studentService.createStudent(name, age);
@@ -60,7 +59,6 @@ public class StudentController {
         return studentService.getFacultyByStudentId(studentId);
     }
 
-
     @GetMapping("/namesStartingWithA")
     public ResponseEntity<List<String>> getStudentNamesStartingWithA() {
         List<Student> students = studentRepository.findAll();
@@ -85,5 +83,19 @@ public class StudentController {
                 .orElse(0);
 
         return ResponseEntity.ok(averageAge);
+    }
+
+    @GetMapping("/print-parallel")
+    public void printStudentNamesParallel() {
+        studentService.printStudentNamesParallel();
+    }
+    @GetMapping("/print-synchronized")
+    public void printStudentsSynchronized() {
+        studentService.printStudentsSynchronized();
+    }
+
+    @GetMapping
+    public void printStudentNamesParalell() {
+        studentService.findStudent(getFacultyByStudentId(getFacultyByStudentId(getFacultyByStudentId(Long id))));
     }
 }

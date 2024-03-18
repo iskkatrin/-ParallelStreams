@@ -17,6 +17,7 @@ import ru.hogwarts.school.repository.StudentRepository;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
@@ -32,6 +33,8 @@ public class StudentService {
 
     private final AvatarRepository avatarRepository;
     private final StudentRepository studentRepository;
+    private List<String> studentNames = Arrays.asList("Alice", "Bob", "Charlie", "David", "Eva", "Frank");
+
 
     public StudentService(AvatarRepository avatarRepository, StudentRepository studentRepository) {
         this.avatarRepository = avatarRepository;
@@ -124,5 +127,47 @@ public class StudentService {
         logger.info("Метод getAllAvatars был вызван");
         return avatarRepository.findAll(pageable);
     }
-}
 
+    public void printStudentNamesParallel() {
+        System.out.println(studentNames.get(0));
+        System.out.println(studentNames.get(1));
+
+        new Thread(() -> {
+            System.out.println(studentNames.get(2));
+            System.out.println(studentNames.get(3));
+        }).start();
+
+        new Thread(() -> {
+            System.out.println(studentNames.get(4));
+            System.out.println(studentNames.get(5));
+        }).start();
+    }
+
+    public synchronized void printStudentsSynchronized() {
+        System.out.println("Первые два имена: " + studentNames.get(0) + ", " + studentNames.get(1));
+
+        Thread thread1 = new Thread(() -> {
+            synchronized (this) {
+                System.out.println("Имя третьего студента: " + studentNames.get(2));
+                System.out.println("Имя четвертого студента: " + studentNames.get(3));
+            }
+        });
+
+        Thread thread2 = new Thread(() -> {
+            synchronized (this) {
+                System.out.println("Имя пятого студента: " + studentNames.get(4));
+                System.out.println("Имя шестого студента: " + studentNames.get(5));
+            }
+        });
+
+        thread1.start();
+        thread2.start();
+
+        try {
+            thread1.join();
+            thread2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}

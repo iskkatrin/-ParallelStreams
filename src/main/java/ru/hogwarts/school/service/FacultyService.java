@@ -21,7 +21,6 @@ public class FacultyService {
         this.facultyRepository = facultyRepository;
     }
 
-
     public Faculty createFaculty(String name, String color) {
         logger.info("Метод createFaculty был вызван");
         Faculty faculty = new Faculty();
